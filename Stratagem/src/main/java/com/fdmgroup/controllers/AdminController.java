@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.fdmgroup.Stratagem.repository.ProjectRepository;
+import com.fdmgroup.Stratagem.model.Project;
 
 
 
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
 	@Autowired
-	private ProjectRepo projectRepo;
+	private ProjectRepository projectRepo;
 	
 	@PostMapping("/createProject")
 	public boolean createProject(@RequestBody Project project) {
