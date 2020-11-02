@@ -1,4 +1,4 @@
-package com.fdmgroup.controllers;
+package com.fdmgroup.Stratagem.controllers;
 
 import java.util.Optional;
 
