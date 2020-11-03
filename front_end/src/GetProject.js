@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios'
-function CreateProject() {
+function GetProject() {
     const [projectName,setProjectName] = useState();
     const [projectDescription,setProjectDescription] = useState();
     const [projects,setProjects] = useState([]);
@@ -30,7 +30,7 @@ function CreateProject() {
   return (
       <div className="container">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
+    Create Project
   </button>
     <div id="exampleModal" class="modal" tabindex="-1">
   <div class="modal-dialog">
@@ -73,4 +73,4 @@ function CreateProject() {
   );
 }
 
-export default CreateProject;
+export default GetProject;

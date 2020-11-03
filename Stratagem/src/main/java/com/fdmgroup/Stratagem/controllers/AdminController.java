@@ -48,6 +48,7 @@ public class AdminController {
 	public boolean deleteProject(@RequestBody Project project) {
 		System.out.println(project.toString());
 		try {
+			
 			projectRepo.delete(project);
 			return true;
 			}
