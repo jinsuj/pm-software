@@ -1,5 +1,6 @@
 package com.fdmgroup.Stratagem.controllers;
 
+import java.util.List;
 import javax.persistence.TransactionRequiredException;
 
 import org.hibernate.id.IdentifierGenerationException;
@@ -10,22 +11,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.fdmgroup.Stratagem.model.Project;
 import com.fdmgroup.Stratagem.model.User;
 import com.fdmgroup.Stratagem.repository.ProjectRepository;
 import com.fdmgroup.Stratagem.repository.UserRepository;
 
 
-
 @RestController
 @CrossOrigin("*")
 public class AdminController {
 
-	@Autowired
+    @Autowired
 	private ProjectRepository projectRepo;
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@GetMapping("list-users")
+	public List<User> listUsers() {
+		List<User> userList = userRepo.findAll();
+		return userList;
+	}
+	
+	@PostMapping("update-user")
+	public void updateUser(@RequestBody User userToChange) {
+		User user = userRepo.getOne(userToChange.getEmail());
+		user = userToChange;
+	}
+	
+	@PostMapping("update-user-role")
+	public void updateUserRole(@RequestBody User userToChange) {
+		User user = userRepo.getOne(userToChange.getEmail());
+		user.setRole(userToChange.getRole());
+	}
 	
 	@PostMapping("/createProject")
 	public boolean createProject(@RequestBody Project project) {
