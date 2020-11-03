@@ -2,8 +2,6 @@ package com.fdmgroup.Stratagem.controllers;
 
 import java.util.List;
 
-import java.util.Optional;
-
 import javax.persistence.TransactionRequiredException;
 
 import org.hibernate.id.IdentifierGenerationException;
@@ -91,6 +89,8 @@ public class AdminController {
 	public boolean addNewUser(@RequestBody User user) {
 		if (user.getFirstName().trim().isEmpty() || user.getLastName().trim().isEmpty()
 			|| user.getPassword().trim().isEmpty()) {
+			return false;
+		} else if (!user.getEmail().substring(user.getEmail().length() - 13).equals("@fdmgroup.com")) {
 			return false;
 		} else if (userRepo.existsById(user.getEmail())) {
 			return false;
