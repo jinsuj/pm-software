@@ -1,7 +1,5 @@
 package com.fdmgroup.Stratagem.controllers;
 
-import java.util.Optional;
-
 import javax.persistence.TransactionRequiredException;
 
 import org.hibernate.id.IdentifierGenerationException;
@@ -12,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fdmgroup.Stratagem.repository.ProjectRepository;
 import com.fdmgroup.Stratagem.model.Project;
+import com.fdmgroup.Stratagem.model.User;
+import com.fdmgroup.Stratagem.repository.ProjectRepository;
+import com.fdmgroup.Stratagem.repository.UserRepository;
 
 
 
@@ -23,6 +23,9 @@ public class AdminController {
 
 	@Autowired
 	private ProjectRepository projectRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	@PostMapping("/createProject")
 	public boolean createProject(@RequestBody Project project) {
@@ -60,4 +63,26 @@ public class AdminController {
 		return false;
 	}
 	
+	@PostMapping("/addNewUser")
+	public boolean addNewUser(@RequestBody User user) {
+		if (user.getFirstName().trim().isEmpty() || user.getLastName().trim().isEmpty()
+			|| user.getPassword().trim().isEmpty()) {
+			return false;
+		} else if (userRepo.existsById(user.getEmail())) {
+			return false;
+		} else {
+			userRepo.save(user);
+			return true;
+		}
+	}
+	
+	@PostMapping("/removeUser")
+	public boolean removeUser(@RequestBody User user) {
+		if (!userRepo.existsById(user.getEmail())) {
+			return false;
+		} else {
+			userRepo.delete(user);
+			return true;
+		}
+	}
 }
