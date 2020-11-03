@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 
 
 const AdminPageRegisterUser = () => {
     const [username, setUsername] = useState('');
+    const [users, setUsers] = useState([]);
     const register = () => {
         Axios.post('http://localhost:8084/register',
         {
@@ -13,7 +14,17 @@ const AdminPageRegisterUser = () => {
         }).then(res => [
             console.log(res.data)
         ])
+        
     }
+
+    useEffect(() => {
+        Axios.get('http://localhost:8084/getalluser')
+            .then(res => {
+                console.log(res);
+                setUsers(res.data)
+            })
+    }, []);
+
     return(
         <div>
             <h1> Admin Page </h1>
@@ -25,7 +36,18 @@ const AdminPageRegisterUser = () => {
                             console.log(e.target.value)
                         }}
                     />
-                    <button onClick={register}>Registration</button>
+            <button onClick={register}>Registration</button>
+           
+           <div>
+                {users.map(user => (
+                    <div key={user.id}>
+                        <h1>{user.username}</h1>
+                        <h3>{user.id}</h3>
+                    </div>
+                    
+                ))}
+           </div>
+            
         </div>
     )
 }
