@@ -90,7 +90,10 @@ public class AdminController {
 		if (user.getFirstName().trim().isEmpty() || user.getLastName().trim().isEmpty()
 			|| user.getPassword().trim().isEmpty()) {
 			return false;
-		} else if (!user.getEmail().substring(user.getEmail().length() - 13).equals("@fdmgroup.com")) {
+		} else if (user.getFirstName() == null || user.getLastName() == null ||
+					user.getEmail() == null) {
+			return false;
+		} else if (user.getEmail().length() <= 13 || !user.getEmail().substring(user.getEmail().length() - 13).equals("@fdmgroup.com")) {
 			return false;
 		} else if (userRepo.existsById(user.getEmail())) {
 			return false;
