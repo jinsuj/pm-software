@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fdmgroup.Stratagem.model.User;
-import com.fdmgroup.Stratagem.repositories.UserRepository;
+import com.fdmgroup.Stratagem.repository.UserRepository;
 
 @RestController
 @CrossOrigin("*")

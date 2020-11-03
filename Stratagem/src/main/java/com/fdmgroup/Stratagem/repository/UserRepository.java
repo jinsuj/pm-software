@@ -1,4 +1,4 @@
-package com.fdmgroup.Stratagem.repositories;
+package com.fdmgroup.Stratagem.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
