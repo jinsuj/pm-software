@@ -1,6 +1,7 @@
 package com.fdmgroup.Stratagem.controllers;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import javax.persistence.TransactionRequiredException;
@@ -14,17 +15,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fdmgroup.Stratagem.repository.ProjectRepository;
-import com.fdmgroup.Stratagem.model.Project;
 
+import com.fdmgroup.Stratagem.model.Project;
+import com.fdmgroup.Stratagem.model.User;
+import com.fdmgroup.Stratagem.repository.ProjectRepository;
+import com.fdmgroup.Stratagem.repository.UserRepository;
 
 
 @RestController
 @CrossOrigin("*")
 public class AdminController {
 
-	@Autowired
+    @Autowired
 	private ProjectRepository projectRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@GetMapping("list-users")
+	public List<User> listUsers() {
+		List<User> userList = userRepo.findAll();
+		return userList;
+	}
+	
+	@PostMapping("update-user")
+	public void updateUser(@RequestBody User userToChange) {
+		User user = userRepo.getOne(userToChange.getEmail());
+		user = userToChange;
+	}
+	
+	@PostMapping("update-user-role")
+	public void updateUserRole(@RequestBody User userToChange) {
+		User user = userRepo.getOne(userToChange.getEmail());
+		user.setRole(userToChange.getRole());
+	}
 	
 	@PostMapping("/createProject")
 	public boolean createProject(@RequestBody Project project) {
@@ -61,6 +85,29 @@ public class AdminController {
 		}
 
 		return false;
+	}
+	
+	@PostMapping("/addNewUser")
+	public boolean addNewUser(@RequestBody User user) {
+		if (user.getFirstName().trim().isEmpty() || user.getLastName().trim().isEmpty()
+			|| user.getPassword().trim().isEmpty()) {
+			return false;
+		} else if (userRepo.existsById(user.getEmail())) {
+			return false;
+		} else {
+			userRepo.save(user);
+			return true;
+		}
+	}
+	
+	@PostMapping("/removeUser")
+	public boolean removeUser(@RequestBody User user) {
+		if (!userRepo.existsById(user.getEmail())) {
+			return false;
+		} else {
+			userRepo.delete(user);
+			return true;
+		}
 	}
 	
 	@GetMapping("/getProjects")
