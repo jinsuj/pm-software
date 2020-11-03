@@ -1,5 +1,6 @@
 package com.fdmgroup.Stratagem.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.TransactionRequiredException;
@@ -8,6 +9,7 @@ import org.hibernate.id.IdentifierGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +60,24 @@ public class AdminController {
 		}
 
 		return false;
+	}
+	
+	@GetMapping("/getProjects")
+	public List<Project> getProjects() {
+		List<Project> projects =null;
+		try {
+			projects = projectRepo.findAll();
+			return projects;
+			}
+		catch (TransactionRequiredException e) {
+			e.printStackTrace();
+		} catch (IdentifierGenerationException e) {
+			e.printStackTrace();
+		} catch (JpaSystemException e) {
+			e.printStackTrace();
+		}
+
+		return projects;
 	}
 	
 }
