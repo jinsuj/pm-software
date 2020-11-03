@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 
 
-const DanAdminPage = () => {
+const AdminPageRegisterUser = () => {
     const [username, setUsername] = useState('');
     const register = () => {
         Axios.post('http://localhost:8084/register',
@@ -30,4 +30,4 @@ const DanAdminPage = () => {
     )
 }
 
-export default DanAdminPage;
+export default AdminPageRegisterUser;
