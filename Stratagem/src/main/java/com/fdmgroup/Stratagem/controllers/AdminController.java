@@ -1,6 +1,9 @@
 package com.fdmgroup.Stratagem.controllers;
 
 import java.util.List;
+
+import java.util.Optional;
+
 import javax.persistence.TransactionRequiredException;
 
 import org.hibernate.id.IdentifierGenerationException;
@@ -69,6 +72,7 @@ public class AdminController {
 	public boolean deleteProject(@RequestBody Project project) {
 		System.out.println(project.toString());
 		try {
+			
 			projectRepo.delete(project);
 			return true;
 			}
@@ -105,4 +109,23 @@ public class AdminController {
 			return true;
 		}
 	}
+	
+	@GetMapping("/getProjects")
+	public List<Project> getProjects() {
+		List<Project> projects =null;
+		try {
+			projects = projectRepo.findAll();
+			return projects;
+			}
+		catch (TransactionRequiredException e) {
+			e.printStackTrace();
+		} catch (IdentifierGenerationException e) {
+			e.printStackTrace();
+		} catch (JpaSystemException e) {
+			e.printStackTrace();
+		}
+
+		return projects;
+	}
+	
 }

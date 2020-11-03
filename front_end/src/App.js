@@ -1,14 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import AdminPage from './Components/AdminPageRegisterUser';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import GetProject from './GetProject'
+import { Route, Switch, BrowserRouter as Router, Link } from 'react-router-dom';
+
+
 function App() {
+  
   return (
-  <Switch>
-    <Route exact path="/" component={AdminPage}/>
-    {/* <PrivateRoute exact path="/app" component={AppLayout}/> */}
-    <Route path="*" component={() => "404 NOT FOUND"}/>
-  </Switch>
+    <Router>
+          <Link className="nav-link" to="/GetProject" style={{ fontWeight:"bold"}}><big>Create Delete Project</big></Link>
+    <div>
+      <Switch>
+        <Route exact={true} path="/GetProject" component={() => <GetProject />} />
+      </Switch>
+    </div>
+  </Router>
   );
 }
 
