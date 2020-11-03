@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import GetProject from './GetProject'
 import { Route, Switch, BrowserRouter as Router, Link } from 'react-router-dom';
+import AdminPageRegisterUser from './Components/AdminPageRegisterUser';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <div>
       <Switch>
         <Route exact={true} path="/GetProject" component={() => <GetProject />} />
+        <Route exact path="/adminadd" component={AdminPageRegisterUser} />
       </Switch>
     </div>
   </Router>

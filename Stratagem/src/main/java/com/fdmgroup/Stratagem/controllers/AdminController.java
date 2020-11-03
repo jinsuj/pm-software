@@ -30,19 +30,19 @@ public class AdminController {
 	@Autowired
 	private UserRepository userRepo;
 	
-	@GetMapping("list-users")
+	@GetMapping("/list-users")
 	public List<User> listUsers() {
 		List<User> userList = userRepo.findAll();
 		return userList;
 	}
 	
-	@PostMapping("update-user")
+	@PostMapping("/update-user")
 	public void updateUser(@RequestBody User userToChange) {
 		User user = userRepo.getOne(userToChange.getEmail());
 		user = userToChange;
 	}
 	
-	@PostMapping("update-user-role")
+	@PostMapping("/update-user-role")
 	public void updateUserRole(@RequestBody User userToChange) {
 		User user = userRepo.getOne(userToChange.getEmail());
 		user.setRole(userToChange.getRole());
@@ -87,6 +87,7 @@ public class AdminController {
 	
 	@PostMapping("/addNewUser")
 	public boolean addNewUser(@RequestBody User user) {
+		System.out.println(user.toString());
 		if (user.getFirstName().trim().isEmpty() || user.getLastName().trim().isEmpty()
 			|| user.getPassword().trim().isEmpty()) {
 			return false;

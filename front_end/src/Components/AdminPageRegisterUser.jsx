@@ -6,11 +6,21 @@ import Axios from 'axios';
 
 const AdminPageRegisterUser = () => {
     const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [userEmail, setEmail] = useState('');
+    const [userRole, setRole] = useState('');
+    const [userPassword, setPassword] = useState('');
     const [users, setUsers] = useState([]);
     const register = () => {
-        Axios.post('http://localhost:8084/register',
+        Axios.post('http://localhost:8084/addNewUser',
         {
-            username: username
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            email: userEmail,
+            role: userRole,
+            password: userPassword
         }).then(res => [
             console.log(res.data)
         ])
@@ -18,7 +28,7 @@ const AdminPageRegisterUser = () => {
     }
 
     useEffect(() => {
-        Axios.get('http://localhost:8084/getalluser')
+        Axios.get('http://localhost:8084/list-users')
             .then(res => {
                 console.log(res);
                 setUsers(res.data)
@@ -33,6 +43,36 @@ const AdminPageRegisterUser = () => {
             <input type="text"
                         onChange={e => {
                             setUsername(e.target.value);
+                            console.log(e.target.value)
+                        }}
+                    />
+                    <input type="text"
+                        onChange={e => {
+                            setLastName(e.target.value);
+                            console.log(e.target.value)
+                        }}
+                    />
+                    <input type="text"
+                        onChange={e => {
+                            setFirstName(e.target.value);
+                            console.log(e.target.value)
+                        }}
+                    />
+                                <input type="email"
+                        onChange={e => {
+                            setEmail(e.target.value);
+                            console.log(e.target.value)
+                        }}
+                    />
+                                <input type="text"
+                        onChange={e => {
+                            setRole(e.target.value);
+                            console.log(e.target.value)
+                        }}
+                    />
+                                <input type="text"
+                        onChange={e => {
+                            setPassword(e.target.value);
                             console.log(e.target.value)
                         }}
                     />
