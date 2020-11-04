@@ -2,8 +2,6 @@ package com.fdmgroup.Stratagem.controllers;
 
 import java.util.List;
 
-import java.util.Optional;
-
 import javax.persistence.TransactionRequiredException;
 
 import org.hibernate.id.IdentifierGenerationException;
@@ -32,19 +30,19 @@ public class AdminController {
 	@Autowired
 	private UserRepository userRepo;
 	
-	@GetMapping("list-users")
+	@GetMapping("/list-users")
 	public List<User> listUsers() {
 		List<User> userList = userRepo.findAll();
 		return userList;
 	}
 	
-	@PostMapping("update-user")
+	@PostMapping("/update-user")
 	public void updateUser(@RequestBody User userToChange) {
 		User user = userRepo.getOne(userToChange.getEmail());
 		user = userToChange;
 	}
 	
-	@PostMapping("update-user-role")
+	@PostMapping("/update-user-role")
 	public void updateUserRole(@RequestBody User userToChange) {
 		User user = userRepo.getOne(userToChange.getEmail());
 		user.setRole(userToChange.getRole());
@@ -89,8 +87,14 @@ public class AdminController {
 	
 	@PostMapping("/addNewUser")
 	public boolean addNewUser(@RequestBody User user) {
+		System.out.println(user.toString());
 		if (user.getFirstName().trim().isEmpty() || user.getLastName().trim().isEmpty()
 			|| user.getPassword().trim().isEmpty()) {
+			return false;
+		} else if (user.getFirstName() == null || user.getLastName() == null ||
+					user.getEmail() == null) {
+			return false;
+		} else if (user.getEmail().length() <= 13 || !user.getEmail().substring(user.getEmail().length() - 13).equals("@fdmgroup.com")) {
 			return false;
 		} else if (userRepo.existsById(user.getEmail())) {
 			return false;
